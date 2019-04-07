@@ -3,12 +3,13 @@ import { ShowCard as ShowCardType } from './types';
 import classes from './ShowCard.module.scss';
 interface Props {
   show: ShowCardType
+  class: string;
 }
 
 const ShowCard: React.FunctionComponent<Props> = (props) => {
   const {name, image, rating, seasons} = props.show;
   return (
-    <div className={classes.Card} >
+    <div className={props.class} >
       <img src={image} alt=""/>
       <div className={classes.Info}>
         <div className={classes.Name}>{name}</div>

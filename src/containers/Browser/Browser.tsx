@@ -3,25 +3,17 @@ import { connect } from 'react-redux';
 import {Dispatch} from "redux";
 import classes from './Browser.module.scss';
 import {BaseAction} from "../../store/sagas/actions";
-import { ShowCard as ShowCardType} from '../../components/showCards/types';
-import { GET_SHOWS_START, GET_PORTAL_START } from '../../store/actions';
-import ShowCard from '../../components/showCards/ShowCard';
+import { GET_PORTAL_START } from '../../store/actions';
 import { AppState } from '../../store/reducers';
 import { BrowserCard } from './types';
+import Slider from '../Slider/Slider';
 
 interface Props {
-    shows: ShowCardType[]
-    areCardLoading: boolean
-    fetchShows: Function,
     fetchPortal: Function,
     portal: BrowserCard[],
     isPortalLoading: boolean
 }
 
-const GET_SHOWS: BaseAction = {
-    type: GET_SHOWS_START,
-    payload: {}
-};
 
 const GET_PORTAL: BaseAction = {
     type: GET_PORTAL_START,
@@ -31,37 +23,34 @@ const GET_PORTAL: BaseAction = {
 class Browser extends Component<Props, {}> {
     componentDidMount()
     {
-        this.props.fetchShows();
         this.props.fetchPortal();
     }
-    renderShowCards = () => {
-      let cards: ReactNode = (<div>LOADING</div>);
-      if (this.props.areCardLoading === false) {
-        cards = this.props.shows.map((show: ShowCardType) => <ShowCard key={show.id} show={show}></ShowCard>)
-      }
-      return cards;
+
+    renderRows = () => {
+      let portal: ReactNode = (<div>LOADING</div>);
+      if (this.props.isPortalLoading === false ) {
+        portal = Object.keys(this.props.portal).map((key: string) => { 
+          const card: BrowserCard = {
+            genre: key,
+            cards: this.props.portal[key]
+          };
+       return ( <Slider key={key} shows={card} />)
+      });
     }
+    return portal;
+  }
 
     render() {
-      console.log(this.props.portal)
         return (
             <div className={classes.Browser}>
-              BROWSER
-              <div className={classes.Cards}>
-                {this.renderShowCards()}
-              </div>
+                {this.renderRows()}
             </div>
         );
     }
 }
 
-
-
 const mapStateToProps = (state: AppState) => {
-  // console.log(state)
     return {
-        shows: state.showCards.content,
-        areCardLoading: state.showCards.loading,
         portal: state.browserCards.cards,
         isPortalLoading: state.browserCards.loading
     };
@@ -69,7 +58,6 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        fetchShows: () => dispatch(GET_SHOWS),
         fetchPortal: () => dispatch(GET_PORTAL)
     };
 };

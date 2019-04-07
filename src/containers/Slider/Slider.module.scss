@@ -1,0 +1,42 @@
+.Slider {
+  font-size: 1em;
+}
+
+.Container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.Row {
+  padding: 0 6em;
+  // margin-left: 1.2em;
+  display: flex;
+  flex-wrap: nowrap;
+  &:hover .Card {
+    transform: translateX(-25%);
+  }
+  margin-bottom: 3em;
+  z-index: 1;
+}
+
+.Title {
+  font-size: 1.2em;
+  margin-bottom: 1.5em;
+}
+
+.Card {
+  margin: 1.3em 2px;
+  position: relative;
+  // text-align: center;
+  z-index: 2;
+  transition: transform 300ms ease 100ms;
+  flex: 0 0 210px;
+
+  &:hover {
+    transform: scale(1.5) !important;
+  }
+
+  &:hover ~ .Card {
+    transform: translateX(25%);
+  }
+}

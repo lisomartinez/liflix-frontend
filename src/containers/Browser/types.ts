@@ -2,7 +2,7 @@ import { ShowCard } from "../../components/showCards/types";
 
 export interface BrowserCard {
   genre: string,
-  showCard: ShowCard
+  cards: ShowCard[]
 }
 
 export interface BrowserState {

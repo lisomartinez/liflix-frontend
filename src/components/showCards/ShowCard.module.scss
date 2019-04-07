@@ -6,52 +6,6 @@ $duration: 1.3s;
   font-size: 1em;
 }
 
-.Card {
-  // border: 1px solid white;
-  // flex-basis: 300px;
-  // flex-flow:;
-
-  // flex-grow: 1em;
-  // flex-shrink: 1em;
-  padding:0;
-  margin: 0.2em;
-  opacity: .75;
-
-  height: 19em;
-  width: 13em;
-  position: relative;
-  z-index: 0;
-  @media (min-width: 500px) {
-    &:hover {
-      transform: scale(1.5);
-      transform-origin: left;
-      opacity: 1;
-      transition-timing-function: ease-in-out;
-      transition-delay: 2s;
-      transition: $duration all;
-    }
-    &:hover ~ .Card {
-      transform: translate3d(100px, 0, 0);
-      transition-delay: 2;
-  
-      transition: $duration all;
-    }
-  
-    &:hover  .Info {
-      // left: 0;
-      opacity: 1;
-      left: 0;
-    }
-  }
-
-
-  @media (max-width: 500px) {
-    // height: 100%;
-    // width: 100%;
-  }
-}
-
-
 .Info {
   position: absolute;
   padding: 0;
@@ -59,7 +13,7 @@ $duration: 1.3s;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 1;
+  opacity: 0;
   z-index: 1;
   background:rgba(0,0,0,0.4);
 }
