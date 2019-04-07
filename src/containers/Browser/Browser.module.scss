@@ -1,0 +1,29 @@
+$duration: 1.3s;
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.Browser {
+  color: white;
+  font-weight: 600;
+}
+
+.Cards {
+  display: flex;
+  flex-flow: row wrap;
+  @media (max-width: 500px) {
+    flex-flow: column wrap;
+  }
+
+  @media (min-width: 500px) {
+    &:hover {
+      transform: $duration translate3d(-200px, 0, 0) 2s;
+      transition-delay: 1.3;
+    }
+  }
+}

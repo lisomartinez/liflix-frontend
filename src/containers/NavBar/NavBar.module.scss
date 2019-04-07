@@ -1,0 +1,81 @@
+$Mobile: 400px;
+$Table: 600px;
+$Laptop: 800px;
+$Desktop: 1000px;
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.Navbar {
+  display: flex;
+  flex-direction: row;
+  //justify-content: flex-start;
+  //align-content: flex-end;
+  align-items: baseline;
+
+  flex-wrap: wrap;
+  width: 95%;
+  margin: 0 0 1em;
+  //margin: 0;
+  padding: 0;
+}
+
+.Logo {
+  //background-image: url("toggle.svg");
+  font-size: 1.8em;
+  font-weight: bold;
+  padding: 0;
+  margin: 0 0.5em 0 0;
+  color: greenyellow;
+}
+
+.Toggle {
+  min-width: 0.2em;
+  height: 1.3em;
+  display: none;
+  @media (max-width: $Table) {
+    display: block;
+    margin-right: 1em;
+  }
+}
+
+.List {
+  display: none;
+  flex-direction: row;
+  //justify-content: flex-start;
+  align-items: flex-start;
+  //align-items: flex-end;
+  flex-wrap: wrap;
+  list-style-type: none;
+  font-size: 0.95em;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  height: 2em;
+  word-spacing: 0em;
+
+  @media (min-width: $Table) {
+    display: flex;
+  }
+}
+
+.ListItem {
+  height: 100%;
+  padding: 0.4em;
+  align-self: flex-start;
+  font-size: 0.9em;
+  color: white;
+  text-decoration: none;
+
+  &:hover,  &:active   {
+    color: greenyellow;
+    transition: color 0.5s ;
+  }
+
+}
+
