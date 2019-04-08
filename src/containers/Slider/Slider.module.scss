@@ -29,7 +29,7 @@
   position: relative;
   // text-align: center;
   z-index: 2;
-  transition: transform 300ms ease 100ms;
+  transition: transform 400ms ease 200ms;
   flex: 0 0 210px;
 
   &:hover {
@@ -38,5 +38,27 @@
 
   &:hover ~ .Card {
     transform: translateX(25%);
+  }
+
+  &:hover .Info {
+    opacity: 1;
+  }
+
+  .ButtonContainer {
+    height: 100%;
+    // opacity: 0;
+  }
+  
+  .Info {
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 500ms ease 400ms;
+
+    .ButtonContainer * {
+      // display: none;
+    }
+    &:hover > .ButtonContainer * {
+      // opacity: 1;
+    }
   }
 }

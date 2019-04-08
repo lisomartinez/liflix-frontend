@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ShowCard as ShowCardType } from './types';
-import classes from './ShowCard.module.scss';
+// import classes from './ShowCard.module.scss';
 interface Props {
   show: ShowCardType
-  class: string;
+  classes: {
+    Card: string
+    Info: string
+    ButtonContainer: string
+    selected: string
+  };
+  children: ReactNode
 }
 
 const ShowCard: React.FunctionComponent<Props> = (props) => {
-  const {name, image, rating, seasons} = props.show;
+  const {image} = props.show;
   return (
-    <div className={props.class} >
+    <div className={[props.classes.Card, props.classes.selected].join(' ')} >
       <img src={image} alt=""/>
-      <div className={classes.Info}>
-        <div className={classes.Name}>{name}</div>
-        <div className={classes.Seasons}>{seasons} seasons</div>
-        <div className={classes.Rating}>rating: {rating}</div>    
+      <div className={props.classes.Info}>
+        <div className={props.classes.ButtonContainer}>
+          {props.children}    
+        </div>
       </div>
     </div>
   )

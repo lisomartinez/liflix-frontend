@@ -4,19 +4,26 @@ $duration: 1.3s;
 * {
   color: white;
   font-size: 1em;
+  
+
 }
 
-.Info {
-  position: absolute;
-  padding: 0;
-  top:60%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  z-index: 1;
-  background:rgba(0,0,0,0.4);
-}
+// .ButtonContainer {
+//   height: 100%;
+//   // opacity: 0;
+// }
+
+// .Info {
+//   z-index: 0;
+
+//   .ButtonContainer * {
+//     // display: none;
+//     // opacity: 0;
+//   }
+//   &:hover > .ButtonContainer * {
+//     // opacity: 1;
+//   }
+// }
 
 .Name {
   font-size: 1.1rem;

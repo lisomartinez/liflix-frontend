@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import {Dispatch} from "redux";
 import classes from './Browser.module.scss';
 import {BaseAction} from "../../store/sagas/actions";
-import { GET_PORTAL_START } from '../../store/actions';
+import { GET_PORTAL_START, GET_SHOW_START } from '../../store/actions';
 import { AppState } from '../../store/reducers';
 import { BrowserCard } from './types';
 import Slider from '../Slider/Slider';
 
 interface Props {
     fetchPortal: Function,
+    fetchShow: Function,
     portal: BrowserCard[],
     isPortalLoading: boolean
 }
@@ -34,7 +35,7 @@ class Browser extends Component<Props, {}> {
             genre: key,
             cards: this.props.portal[key]
           };
-       return ( <Slider key={key} shows={card} />)
+       return ( <Slider key={key} shows={card} rowName={key} />)
       });
     }
     return portal;
@@ -58,7 +59,8 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        fetchPortal: () => dispatch(GET_PORTAL)
+        fetchPortal: () => dispatch(GET_PORTAL),
+        fetchShow: (id: number) => dispatch({type: GET_SHOW_START, payload: id})
     };
 };
 

@@ -8,7 +8,18 @@ interface Props {
 }
 
 const SlideButton: React.FC<Props> = (props) => {
-  const direction = props.type === "Next" ? classes.Next : classes.Prev;
+  let direction;
+  switch(props.type) {
+    case("Next"):
+      direction = classes.Next;
+      break;
+    case("Prev"):
+      direction = classes.Prev;
+      break;
+    default:
+      direction = '';
+      break;
+  }
   return (
   <button onClick={props.onClick} className={[classes.Button, direction].join(' ')}>
     <span>

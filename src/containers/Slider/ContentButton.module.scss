@@ -1,0 +1,23 @@
+.Button {
+  position: absolute;
+  left: 80px;
+  bottom: 0;
+  width: 44px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 0;
+  outline: 0;
+  // padding-top: 10px;
+  // margin: 100px 0;
+  z-index: 8;
+  height: 40px;
+  // transform: scale(1) !important;
+  // opacity: 0;
+  // transition: opacity 1000ms ease 200ms;
+
+  span {
+    width: 25px;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+  }
+}

@@ -1,7 +1,7 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 import axios from 'axios';
-import { actionTypes } from './actions';
-import { GET_SHOWS_START, GET_PORTAL_START } from '../actions/index';
+import { actionTypes, BaseAction } from './actions';
+import { GET_SHOWS_START, GET_PORTAL_START, GET_SHOW_START } from '../actions/index';
 import { ShowCardState } from '../../components/showCards/types'
 
 function* watchFetchShowCards() {
@@ -38,9 +38,6 @@ export function* callFetchShowCards() {
   }
 }
 
-
-
-
 const fetchShowCards = () => {
   return axios.get('http://localhost:8080/shows/cards');
 };
@@ -62,9 +59,30 @@ const fetchPortal = () => {
   return axios.get('http://localhost:8080/browser/portal');
 }
 
+
+function* watchGetShow() {
+  yield takeEvery(GET_SHOW_START, (action: BaseAction) => callGetShow(action));
+}
+
+
+function* callGetShow(action: BaseAction) {
+  const response = yield call(fetchShow, action.payload.id);
+  console.log(action.payload)
+  yield put({
+    type: actionTypes.GET_SHOW,
+    payload: { key: action.payload.row, value: response.data }
+  })
+}
+
+const fetchShow = async (id: number) => { 
+  const response = await axios.get(`http://localhost:8080/shows/${id}`)
+  return response;
+};
+
 export const showsRoot = function* showsRoot() {
   yield all([
     fork(watchFetchShowCards),
-    fork(watchFetchPortl)
+    fork(watchFetchPortl),
+    fork(watchGetShow)
   ])
 };
