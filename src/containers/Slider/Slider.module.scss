@@ -62,3 +62,28 @@
     }
   }
 }
+
+.SkeletonCard {
+  margin: 1.3em 2px;
+  flex: 0 0 210px;
+  height: 295px;
+  content: '.';
+  background-color: grey;
+  z-index: 2;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.5) !important;
+  }
+
+  &:hover ~ .Card {
+    transform: translateX(25%);
+  }
+
+
+}
+
+.SkeletonSpinner {
+  width: 100%;
+  height: 100%;
+}

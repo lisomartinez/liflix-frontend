@@ -4,7 +4,7 @@ export interface ShowCard {
   image: string,
   rating: number,
   seasons: number
-};
+}
 
 export interface ShowCardState {
     content: ShowCard[],

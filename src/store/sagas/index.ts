@@ -1,8 +1,9 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 import axios from 'axios';
 import { actionTypes, BaseAction } from './actions';
-import { GET_SHOWS_START, GET_PORTAL_START, GET_SHOW_START } from '../actions/index';
+import { GET_SHOWS_START, GET_PORTAL_START, GET_SHOW_START, GET_SHOW_BY_GENRE_START } from '../actions/index';
 import { ShowCardState } from '../../components/showCards/types'
+import config from '../../config'
 
 function* watchFetchShowCards() {
   yield takeEvery(GET_SHOWS_START, callFetchShowCards);
@@ -39,7 +40,7 @@ export function* callFetchShowCards() {
 }
 
 const fetchShowCards = () => {
-  return axios.get('http://localhost:8080/shows/cards');
+  return axios.get(`${config.LIFLIX}shows/cards`);
 };
 
 
@@ -48,15 +49,16 @@ function* watchFetchPortl() {
 }
 
 function* callFetchPortal() {
+  yield put({type: actionTypes.LOADING_PORTAL, payload: true})
   const response = yield call(fetchPortal);
   yield put({
     type: actionTypes.GET_PORTAL,
-    payload: response.data
+    payload: {content: response.data, loading: false}
   })
 }
 
 const fetchPortal = () => {
-  return axios.get('http://localhost:8080/browser/portal');
+  return axios.get(`${config.LIFLIX}browser/portal`);
 }
 
 
@@ -66,23 +68,51 @@ function* watchGetShow() {
 
 
 function* callGetShow(action: BaseAction) {
+  yield put ({type: actionTypes.LOADING_SHOWS_BY_GENRE, payload: {key: action.payload.row}});
   const response = yield call(fetchShow, action.payload.id);
-  console.log(action.payload)
   yield put({
     type: actionTypes.GET_SHOW,
-    payload: { key: action.payload.row, value: response.data }
-  })
+    payload: { key: action.payload.row, value: response.data }}
+  )
 }
 
 const fetchShow = async (id: number) => { 
-  const response = await axios.get(`http://localhost:8080/shows/${id}`)
+  const response = await axios.get(`${config.LIFLIX}shows/${id}`)
   return response;
 };
+
+function* watchGetShowByGenre() {
+  yield takeEvery(GET_SHOW_BY_GENRE_START, (action: BaseAction) => callGetShowByGenre(action))
+}
+
+function* callGetShowByGenre(action: BaseAction) {
+  const response = yield call(fetchShowsByGenre, action.payload);
+  yield put({
+    type: actionTypes.GET_SHOWS_BY_GENRE,
+    payload: {
+      key: action.payload.genre,
+      cards: response.data
+    }
+  })
+}
+
+interface Params {
+  genre: string
+  page: number
+  size: number
+}
+
+const fetchShowsByGenre = async (params: Params) => { 
+  console.log(`${config.LIFLIX}genres/${params.genre}?page=${params.page}&size=${params.size}`)
+  return   await axios.get(`${config.LIFLIX}genres/${params.genre}?page=${params.page}&size=${params.size}`) 
+};
+
 
 export const showsRoot = function* showsRoot() {
   yield all([
     fork(watchFetchShowCards),
     fork(watchFetchPortl),
-    fork(watchGetShow)
+    fork(watchGetShow),
+    fork(watchGetShowByGenre)
   ])
 };
